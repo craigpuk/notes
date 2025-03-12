@@ -31,28 +31,40 @@
 </head>
 <body>
     <h2>Editable Text Editor</h2>
+    <label for="username">Enter your name:</label>
+    <input type="text" id="username" placeholder="Your name">
+    <br><br>
     <div id="editor" contenteditable="true"></div>
     <br>
-    <button onclick="clearText()">Clear Text</button>
+    <button onclick="saveText()">Save</button>
+    <p id="timestamp"></p>
 
     <script>
-        // Load saved text from localStorage
         document.addEventListener("DOMContentLoaded", function () {
             let savedText = localStorage.getItem("editableText");
+            let savedName = localStorage.getItem("username");
+            let savedTimestamp = localStorage.getItem("timestamp");
             if (savedText) {
                 document.getElementById("editor").innerHTML = savedText;
             }
+            if (savedName) {
+                document.getElementById("username").value = savedName;
+            }
+            if (savedTimestamp) {
+                document.getElementById("timestamp").innerText = "Last saved: " + savedTimestamp;
+            }
         });
 
-        // Save text on input
-        document.getElementById("editor").addEventListener("input", function () {
-            localStorage.setItem("editableText", this.innerHTML);
-        });
-
-        // Clear the text and remove from storage
-        function clearText() {
-            document.getElementById("editor").innerHTML = "";
-            localStorage.removeItem("editableText");
+        function saveText() {
+            let editorContent = document.getElementById("editor").innerHTML;
+            let username = document.getElementById("username").value;
+            let timestamp = new Date().toLocaleString();
+            
+            localStorage.setItem("editableText", editorContent);
+            localStorage.setItem("username", username);
+            localStorage.setItem("timestamp", timestamp);
+            
+            document.getElementById("timestamp").innerText = "Last saved: " + timestamp;
         }
     </script>
 </body>
