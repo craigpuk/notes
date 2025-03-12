@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editable Text Editor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            text-align: center;
+        }
+        #editor {
+            width: 80%;
+            height: 400px;
+            margin: auto;
+            border: 2px solid #ccc;
+            padding: 10px;
+            font-size: 16px;
+            outline: none;
+            overflow-y: auto;
+            background: #f9f9f9;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Editable Text Editor</h2>
+    <div id="editor" contenteditable="true"></div>
+    <br>
+    <button onclick="clearText()">Clear Text</button>
+
+    <script>
+        // Load saved text from localStorage
+        document.addEventListener("DOMContentLoaded", function () {
+            let savedText = localStorage.getItem("editableText");
+            if (savedText) {
+                document.getElementById("editor").innerHTML = savedText;
+            }
+        });
+
+        // Save text on input
+        document.getElementById("editor").addEventListener("input", function () {
+            localStorage.setItem("editableText", this.innerHTML);
+        });
+
+        // Clear the text and remove from storage
+        function clearText() {
+            document.getElementById("editor").innerHTML = "";
+            localStorage.removeItem("editableText");
+        }
+    </script>
+</body>
+</html>
